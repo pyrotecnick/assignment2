@@ -9,7 +9,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-        private $username = '';
+        private $username = ''; //user input of username
 
 	
 
@@ -23,18 +23,18 @@ class LoginView {
 	public function response() {
 		$message = '';
               
-                if (isset($_POST[self::$login])){
-                    if(empty($_POST[self::$name]) && empty($_POST[self::$password])){
+                if (isset($_POST[self::$login])){       //making sure the login button has been pressed
+                    if(empty($_POST[self::$name]) && empty($_POST[self::$password])){       //username and password are empty
                         $message = 'Username is missing';
                     }
-                    else if(!empty($_POST[self::$name]) && empty($_POST[self::$password])){
+                    else if(!empty($_POST[self::$name]) && empty($_POST[self::$password])){     //username with no password
                         $message = 'Password is missing';
                         $this->username = $_POST[self::$name];
                     }
-                    else if(empty($_POST[self::$name]) && !empty($_POST[self::$password])){
+                    else if(empty($_POST[self::$name]) && !empty($_POST[self::$password])){     //password with no username
                         $message = 'Username is missing';
                     }
-                    else if($_POST[self::$name] != "Admin" || $_POST[self::$password] != "Password"){
+                    else if($_POST[self::$name] != "Admin" || $_POST[self::$password] != "Password"){       //incorrect username or password
                         $message = 'Wrong name or password';
                         $this->username = $_POST[self::$name];
                     }
