@@ -1,5 +1,7 @@
 <?php
 
+//namespace view;
+
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -10,10 +12,14 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
         private $username = ''; //user input of username
+       
+        
+        public function _constructor(){
+        }
 
-	
+       
 
-	/**
+        /**
 	 * Create HTTP response
 	 *
 	 * Should be called after a login attempt has been determined
@@ -23,24 +29,33 @@ class LoginView {
 	public function response() {
 		$message = '';
               
-                if (isset($_POST[self::$login])){       //making sure the login button has been pressed
+                if (isset($_POST[self::$login]) || self::$login == NULL){       //making sure the login button has been pressed
                     if(empty($_POST[self::$name]) && empty($_POST[self::$password])){       //username and password are empty
                         $message = 'Username is missing';
+                        $response = $this->generateLoginFormHTML($message);
                     }
                     else if(!empty($_POST[self::$name]) && empty($_POST[self::$password])){     //username with no password
                         $message = 'Password is missing';
                         $this->username = $_POST[self::$name];
+                        $response = $this->generateLoginFormHTML($message);
                     }
                     else if(empty($_POST[self::$name]) && !empty($_POST[self::$password])){     //password with no username
                         $message = 'Username is missing';
+                        $response = $this->generateLoginFormHTML($message);
                     }
                     else if($_POST[self::$name] != "Admin" || $_POST[self::$password] != "Password"){       //incorrect username or password
                         $message = 'Wrong name or password';
                         $this->username = $_POST[self::$name];
+                        $response = $this->generateLoginFormHTML($message);
                     }
+                    else if ($_POST[self::$name] == "Admin" || $_POST[self::$password] == "Password") {       //correct username or password
+                        $GLOBALS['loggedIn'] = TRUE;
+                        $message = 'Welcome';
+                        $response = $this->generateLogoutButtonHTML($message);
+                    }
+                }else {
+                    $response = $this->generateLoginFormHTML($message);
                 }
-		$response = $this->generateLoginFormHTML($message);
-		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
 
