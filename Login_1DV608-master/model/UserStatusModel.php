@@ -1,7 +1,11 @@
 <?php
 
 //namespace model;
-$GLOBALS['loggedIn'] = FALSE;
+if(file_get_contents("model/status.txt") != NULL){
+    $GLOBALS['loggedIn'] = TRUE;
+}else{
+    $GLOBALS['loggedIn'] = FALSE;
+}
 class UserStatusModel {
     
     private $loginView;

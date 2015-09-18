@@ -19,7 +19,7 @@ $lv = new LayoutView();
 $lc = new LoginController();
 $usm = new UserStatusModel($v,$lv,$lc);
 
-$v->response();
+$v->responsetest();
 
 $lv->render($GLOBALS['loggedIn'], $v, $dtv);
 
