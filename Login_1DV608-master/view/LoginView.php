@@ -1,6 +1,7 @@
 <?php
 
 //namespace view;
+setcookie("login","",0);
 
 class LoginView {
 
@@ -13,13 +14,9 @@ class LoginView {
     private static $keep = 'LoginView::KeepMeLoggedIn';
     private static $messageId = 'LoginView::Message';
     private $username = ''; //user input of username
-
     public function _constructor() {
-        
     }
     
-
-
     /**
      * Create HTTP response
      *
@@ -28,9 +25,10 @@ class LoginView {
      * @return  void BUT writes to standard output and cookies!
      */
     public function response() {
+        $stat = stat('model\status.txt');
         $message = '';
 
-        if (file_get_contents("model/status.txt") != NULL) {
+        if (file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {
@@ -68,9 +66,10 @@ class LoginView {
     }
     
     public function responsetest() {
+        $stat = stat('model\status.txt');
         $message = '';
 
-        if (file_get_contents("model/status.txt") != NULL) {
+        if (file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {
@@ -98,9 +97,9 @@ class LoginView {
                 $response = $this->generateLoginFormHTML($message);
             }
         } if (isset($_POST[self::$logout]) || self::$logout == NULL) {
-                $GLOBALS['loggedIn'] = FALSE;
-                    file_put_contents("model/status.txt", "");
-                    $message = 'Bye bye!';
+            $GLOBALS['loggedIn'] = FALSE;
+            file_put_contents("model/status.txt", "");
+            $message = 'Bye bye!';
                     $response = $this->generateLoginFormHTML($message);
             }
         return $response;

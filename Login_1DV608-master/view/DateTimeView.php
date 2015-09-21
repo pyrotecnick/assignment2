@@ -20,7 +20,15 @@ class DateTimeView {
 		$timeString = $weekday;
                 $timeString .= ', the ';
                 $timeString .= $mday;
-                $timeString .= 'th of ';
+                if($mday == 1 || 21 || 31){
+                    $timeString .= 'st of ';
+                } else if($mday == 2 || 22){
+                    $timeString .= 'nd of ';
+                } else if($mday == 3 || 23){
+                    $timeString .= 'rd of ';
+                } else {
+                    $timeString .= 'th of ';
+                }
                 $timeString .= $month;
                 $timeString .=  ' ';
                 $timeString .= $year;

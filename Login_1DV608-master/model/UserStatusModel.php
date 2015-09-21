@@ -1,7 +1,10 @@
 <?php
 
 //namespace model;
-if(file_get_contents("model/status.txt") != NULL){
+
+$stat = stat('model\status.txt');
+
+if(file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25){
     $GLOBALS['loggedIn'] = TRUE;
 }else{
     $GLOBALS['loggedIn'] = FALSE;
