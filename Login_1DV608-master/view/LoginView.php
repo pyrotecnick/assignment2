@@ -14,6 +14,10 @@ class LoginView {
     private static $keep = 'LoginView::KeepMeLoggedIn';
     private static $messageId = 'LoginView::Message';
     private $username = ''; //user input of username
+    private $serverFile = '/home/a8979129/public_html/model/status.txt';
+    private $localFile ='model\status.txt';
+    
+    
     public function _constructor() {
     }
     
@@ -25,10 +29,10 @@ class LoginView {
      * @return  void BUT writes to standard output and cookies!
      */
     public function response() {
-        $stat = stat('model\status.txt');
+        $stat = stat($this->localFile);
         $message = '';
 
-        if (file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25) {
+        if (file_get_contents($this->localFile) != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {
@@ -66,10 +70,10 @@ class LoginView {
     }
     
     public function responsetest() {
-        $stat = stat('model\status.txt');
+        $stat = stat($this->localFile);
         $message = '';
 
-        if (file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25) {
+        if (file_get_contents($this->localFile) != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {

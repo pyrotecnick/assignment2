@@ -2,9 +2,12 @@
 
 //namespace model;
 
-$stat = stat('model\status.txt');
+$serverFile = '/home/a8979129/public_html/model/status.txt';
+$localFile ='model\status.txt';
 
-if(file_get_contents('model\status.txt') != NULL && time() - $stat['mtime'] < 25){
+$stat = stat($localFile);
+
+if(file_get_contents($localFile) != NULL && time() - $stat['mtime'] < 25){
     $GLOBALS['loggedIn'] = TRUE;
 }else{
     $GLOBALS['loggedIn'] = FALSE;
