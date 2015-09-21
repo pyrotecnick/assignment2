@@ -29,10 +29,10 @@ class LoginView {
      * @return  void BUT writes to standard output and cookies!
      */
     public function response() {
-        $stat = stat($this->localFile);
+        $stat = stat($this->serverFile);
         $message = '';
 
-        if (file_get_contents($this->localFile) != NULL && time() - $stat['mtime'] < 25) {
+        if (file_get_contents($this->serverFile) != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {
@@ -62,18 +62,22 @@ class LoginView {
             }
         } if (isset($_POST[self::$logout]) || self::$logout == NULL) {
                 $GLOBALS['loggedIn'] = FALSE;
+                    if(file_get_contents($this->serverFile) != NULL){
+                        $message = 'Bye bye!';
+                    }else{
+                        $message = '';                    
+                    }
                     file_put_contents("model/status.txt", "");
-                    $message = 'Bye bye!';
                     $response = $this->generateLoginFormHTML($message);
             }
         return $response;
     }
     
     public function responsetest() {
-        $stat = stat($this->localFile);
+        $stat = stat($this->serverFile);
         $message = '';
 
-        if (file_get_contents($this->localFile) != NULL && time() - $stat['mtime'] < 25) {
+        if (file_get_contents($this->serverFile) != NULL && time() - $stat['mtime'] < 25) {
             $message = '';
             $response = $this->generateLogoutButtonHTML($message);
         } else {
@@ -102,7 +106,6 @@ class LoginView {
             }
         } if (isset($_POST[self::$logout]) || self::$logout == NULL) {
             $GLOBALS['loggedIn'] = FALSE;
-            file_put_contents("model/status.txt", "");
             $message = 'Bye bye!';
                     $response = $this->generateLoginFormHTML($message);
             }

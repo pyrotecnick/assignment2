@@ -5,9 +5,9 @@
 $serverFile = '/home/a8979129/public_html/model/status.txt';
 $localFile ='model\status.txt';
 
-$stat = stat($localFile);
+$stat = stat($serverFile);
 
-if(file_get_contents($localFile) != NULL && time() - $stat['mtime'] < 25){
+if(file_get_contents($serverFile) != NULL && time() - $stat['mtime'] < 25){
     $GLOBALS['loggedIn'] = TRUE;
 }else{
     $GLOBALS['loggedIn'] = FALSE;
