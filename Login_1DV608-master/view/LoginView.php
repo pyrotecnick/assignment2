@@ -10,6 +10,7 @@ class LoginView {
     private static $name = 'LoginView::UserName';
     private static $password = 'LoginView::Password';
     private static $cookieName = 'LoginView::CookieName';
+    private static $session = 'PHPSESSID';
     private static $cookiePassword = 'LoginView::CookiePassword';
     private static $keep = 'LoginView::KeepMeLoggedIn';
     private static $messageId = 'LoginView::Message';
@@ -29,6 +30,7 @@ class LoginView {
      * @return  void BUT writes to standard output and cookies!
      */
     public function response() {
+        setcookie('PHPSESSID', $this->passwordGenerator(), time() + 120);
         $stat = stat($this->serverFile);
         $message = '';
 
@@ -185,12 +187,15 @@ $stat = stat($this->serverFile);
         //RETURN REQUEST VARIABLE: USERNAME
     }
     
+    /*
+     * generates a psedo random string
+     */
     function passwordGenerator() {
         
-    $bank = '~!@#$%&*0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $bank = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $random = '';
     for ($i = 0; $i < 16; $i++) {
-        $random .= $bank[rand(0, strlen($bank))];
+        $random .= $bank[rand(0, strlen($bank)- 1)];
     }
     return $random;
 }

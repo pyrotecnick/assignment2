@@ -6,6 +6,7 @@ class DateTimeView {
 
 
 	public function show() {
+                date_default_timezone_set('Europe/Copenhagen');
             
                 $data = getdate();
                 $weekday = $data['weekday'];
