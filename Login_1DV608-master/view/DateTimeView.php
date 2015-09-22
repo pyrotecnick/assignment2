@@ -20,11 +20,11 @@ class DateTimeView {
 		$timeString = $weekday;
                 $timeString .= ', the ';
                 $timeString .= $mday;
-                if($mday == 1 || 21 || 31){
+                if($mday == 1 || $mday == 21 || $mday == 31){
                     $timeString .= 'st of ';
-                } else if($mday == 2 || 22){
+                } else if($mday == 2 || $mday == 22){
                     $timeString .= 'nd of ';
-                } else if($mday == 3 || 23){
+                } else if($mday == 3 || $mday == 23){
                     $timeString .= 'rd of ';
                 } else {
                     $timeString .= 'th of ';
